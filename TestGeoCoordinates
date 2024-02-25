@@ -1,0 +1,164 @@
+using Lab9;
+namespace TestGeoCoordinates
+{
+    [TestClass]
+    public class UnitTest1
+    {
+        [TestMethod]
+        public void TestGeoCoordinatesEmpty()
+        {
+            //Arrange
+            GeoCoordinates expected = new GeoCoordinates();
+            //Act
+            GeoCoordinates actual = new GeoCoordinates();
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestGeoCoordinatesFilled()
+        {
+            //Arrange
+            GeoCoordinates expected = new GeoCoordinates(10.3434, -23.2333);
+            //Act
+            GeoCoordinates actual = new GeoCoordinates(10.3434, -23.2333);
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestGeoCoordinatesCopied()
+        {
+            //Arrange
+            GeoCoordinates expected = new GeoCoordinates(10.3434, 23.2333);
+            //Act
+            GeoCoordinates actual = new GeoCoordinates(expected);
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestGeoCoordinatesToString()
+        {
+            //Arrange
+            GeoCoordinates expected = new GeoCoordinates(10.3434, 23.2333);
+            //Act
+            string actual = $"Широта: 10,3434 Долгота: 23,2333";
+            //Assert
+            Assert.AreEqual(expected.ToString(), actual);
+        }
+
+        [TestMethod]
+        public void TestGeoCoordinatesFindDistance1()
+        {
+            //Arrange
+            GeoCoordinates p1 = new GeoCoordinates(-78.4875, 45.4945);
+            GeoCoordinates p2 = new GeoCoordinates(12.2365, -34.9848);
+            //Act
+            double actualDistance = GeoCoordinates.FindDistance(p1, p2);
+            //Assert
+            Assert.AreEqual(11130.968, actualDistance);
+        }
+
+        [TestMethod]
+        public void TestGeoCoordinatesPlus()
+        {
+            //Arrange
+            GeoCoordinates expected = new GeoCoordinates(56.8459, -31.0945);
+            //Act
+            GeoCoordinates actual = new GeoCoordinates(56.8559, -31.0845);
+            //Assert
+            Assert.AreEqual(expected++, actual);
+        }
+
+        [TestMethod]
+        public void TestGeoCoordinatesChangeSign()
+        {
+            //Arrange
+            GeoCoordinates expected = new GeoCoordinates(56.8459, -31.0945);
+            //Act
+            GeoCoordinates actual = new GeoCoordinates(-56.8459, 31.0945);
+            //Assert
+            Assert.AreEqual(-expected, actual);
+        }
+
+        [TestMethod]
+        public void TestGeoCoordinatesIfEquator()
+        {
+            //Arrange
+            GeoCoordinates expected = new GeoCoordinates(56.8459, -31.0945);
+            //Act
+            bool actual = (bool)expected;
+            //Assert
+            Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        public void TestGeoCoordinatesIfWesternLongitude()
+        {
+            //Arrange
+            GeoCoordinates expected = new GeoCoordinates(56.8459, -31.0945);
+            //Act
+            string actual = expected;
+            //Assert
+            Assert.AreEqual("Западная долгота", actual);
+        }
+
+        [TestMethod]
+        public void TestGeoCoordinatesIfEasterbLongitude()
+        {
+            //Arrange
+            GeoCoordinates expected = new GeoCoordinates(56.8459, 31.0945);
+            //Act
+            string actual = expected;
+            //Assert
+            Assert.AreEqual("Восточная долгота", actual);
+        }
+
+        [TestMethod]
+        public void TestGeoCoordinatesIfZeroLongitude()
+        {
+            //Arrange
+            GeoCoordinates expected = new GeoCoordinates(56.8459, 0);
+            //Act
+            string actual = expected;
+            //Assert
+            Assert.AreEqual("Нулевой меридиан", actual);
+        }
+
+        [TestMethod]
+        public void TestGeoCoordinatesIfEqualLatitude()
+        {
+            //Arrange
+            GeoCoordinates p1 = new GeoCoordinates(-78.4875, 45.4945);
+            GeoCoordinates p2 = new GeoCoordinates(12.2365, -34.9848);
+            //Act
+            bool actual = p1 == p2;
+            //Assert
+            Assert.IsFalse(actual);
+        }
+
+        [TestMethod]
+        public void TestGeoCoordinatesIfEqualLongtitude()
+        {
+            //Arrange
+            GeoCoordinates p1 = new GeoCoordinates(-78.4875, 45.4945);
+            GeoCoordinates p2 = new GeoCoordinates(12.2365, -34.9848);
+            //Act
+            bool actual = p1 != p2;
+            //Assert
+            Assert.IsTrue(actual);
+        }
+
+
+        [TestMethod]
+        public void TestGeoCoordinatesArrayIndexer()
+        {
+            //Arrange
+            GeoCoordinatesArray g = new GeoCoordinatesArray(4);
+            //Assert
+            Assert.ThrowsException<Exception>(() => { new GeoCoordinates(g[9]); });
+        }
+
+    }
+}
